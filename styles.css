@@ -1,5 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
 
 :root{font-family:'DM Sans','Noto Sans KR',sans-serif;color:#292a26;background:#f7f7f4;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#292a26;--muted:#92938c;--line:#e9e9e3;--accent:#d98270}
 *{box-sizing:border-box}body{margin:0;min-width:320px}.app-shell{max-width:1040px;margin:0 auto;padding:32px 30px 28px}.topbar{display:flex;align-items:center;justify-content:space-between}.wordmark{display:flex;gap:10px;align-items:center;color:var(--ink);font-size:14px;font-weight:600;text-decoration:none;letter-spacing:-.03em}.brand-mark{color:var(--accent);font-size:16px}.private-note{font-size:11px;color:#a3a49d}.intro{padding:68px 0 37px}.eyebrow{margin:0 0 13px;color:#a2a39c;font-size:9px;letter-spacing:.17em;font-weight:600}.intro h1{font-size:34px;line-height:1.46;letter-spacing:-.07em;font-weight:500;margin:0}.intro-copy{font-size:12px;color:#898a83;margin:13px 0 0;letter-spacing:-.03em}.diary-card{display:grid;grid-template-columns:minmax(0,1.27fr) minmax(300px,.73fr);border:1px solid var(--line);border-radius:8px;background:#fff;min-height:440px;box-shadow:0 8px 30px #33330805}.calendar-column{padding:30px 34px 24px;border-right:1px solid var(--line)}.calendar-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:27px}.month-label{font-size:19px;font-weight:500;margin:0;letter-spacing:-.05em}.calendar-hint{font-size:10px;color:#a0a099;margin:6px 0 0}.month-controls{display:flex;gap:5px}.icon-button{width:27px;height:27px;border:1px solid var(--line);border-radius:50%;background:#fff;color:#6e6f69;font-size:18px;line-height:1;cursor:pointer}.icon-button:hover{background:#f7f7f4}.weekday-row,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));text-align:center}.weekday-row{font-size:10px;color:#a4a59e;padding-bottom:10px;border-bottom:1px solid #f0f0ec}.weekday-row span:first-child{color:#ce8c7e}.calendar-grid{row-gap:5px;padding-top:7px}.day-cell{position:relative;display:flex;justify-content:center;align-items:center;height:43px;border:0;background:transparent;color:#4c4d47;font:400 11px inherit;cursor:pointer;border-radius:50%;margin:0 auto;width:38px}.day-cell:hover{background:#f6f6f2}.day-cell.outside{color:#d6d7d0;cursor:default}.day-cell.today .day-number{width:27px;height:27px;border:1px solid #d8d9d2;border-radius:50%;display:grid;place-items:center}.day-cell.selected-day{background:#f5f4ef}.day-dot{position:absolute;width:5px;height:5px;border-radius:50%;bottom:3px;left:50%;transform:translateX(-50%)}.legend{display:flex;align-items:center;gap:8px;margin-top:18px;font-size:10px;color:#92938c}.legend-dot{width:6px;height:6px;background:var(--accent);border-radius:50%}.legend-count{margin-left:auto;color:#aaa}.entry-panel{padding:31px 29px 23px;display:flex;flex-direction:column}.entry-heading{min-height:60px;margin-bottom:26px}.entry-heading .eyebrow{margin-bottom:7px}.entry-heading h2{font-size:15px;letter-spacing:-.04em;font-weight:500;margin:0}.field-label{display:block;color:#696a64;font-size:10px;font-weight:500;margin-bottom:9px}.entry-panel textarea{resize:vertical;min-height:115px;border:1px solid var(--line);border-radius:5px;padding:12px;font:400 11px/1.8 inherit;color:var(--ink);outline:none;background:#fdfdfc}.entry-panel textarea:focus{border-color:#c7c8bf}.entry-panel textarea::placeholder{color:#c1c2bb}.entry-panel textarea:disabled{background:#fafaf8}.note-meta{display:flex;justify-content:space-between;color:#b0b1aa;font-size:9px;margin-top:7px}.color-section{margin-top:24px}.color-options{display:flex;gap:9px}.color-option{width:20px;height:20px;border-radius:50%;border:0;background:var(--swatch);cursor:pointer;position:relative}.color-option.selected:after{content:'';position:absolute;inset:-4px;border:1px solid var(--swatch);border-radius:50%}.entry-actions{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:25px}.delete-button{border:0;background:none;padding:8px 0;color:#aaa;font:inherit;font-size:10px;cursor:pointer}.delete-button:disabled{opacity:.4;cursor:default}.save-button{border:0;border-radius:4px;background:#34352f;color:#fff;padding:11px 16px;font:inherit;font-size:10px;cursor:pointer}.save-button span{padding-left:12px;color:#c5c5bb}.save-button:disabled{opacity:.3;cursor:default}.save-hint{margin:10px 0 0;text-align:right;font-size:9px;color:#b1b2ab}footer{text-align:center;color:#a8a9a2;font-size:10px;padding:24px 0 0;letter-spacing:-.02em}
 @media(max-width:720px){.app-shell{padding:23px 18px}.intro{padding:51px 0 28px}.intro h1{font-size:29px}.intro-copy{line-height:1.8;max-width:300px}.diary-card{grid-template-columns:1fr}.calendar-column{border-right:0;border-bottom:1px solid var(--line);padding:25px 20px 21px}.entry-panel{padding:25px 20px 20px;min-height:370px}.day-cell{height:40px}.calendar-grid{row-gap:3px}.calendar-hint{font-size:9px}.entry-heading{margin-bottom:19px}}
+
+/* Soft notebook and hand-drawn details */
+:root{--paper:#fffdf6;--line:#e8dfd1;--accent:#db806e;background:#faf6ec}
+body{background-color:#faf6ec;background-image:radial-gradient(#d9cdbb 0.55px,transparent 0.55px);background-size:16px 16px}
+.app-shell{max-width:1060px}
+.wordmark,.intro h1,.month-label,.entry-heading h2{font-family:'Gaegu','Noto Sans KR',sans-serif}
+.wordmark{font-size:19px}.brand-mark{font-size:12px}
+.private-note{font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:14px;color:#a39684}
+.intro{position:relative;padding-top:65px}
+.intro .eyebrow{color:#ad9c83;letter-spacing:.2em}
+.intro h1{font-size:43px;font-weight:700;line-height:1.22;letter-spacing:-.055em}
+.intro-copy{color:#897c69;font-size:13px}
+.intro-doodle{position:absolute;width:94px;height:80px;left:360px;top:65px;overflow:visible;transform:rotate(8deg)}
+.intro-doodle path{fill:none;stroke:#d98270;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.diary-card{position:relative;background:var(--paper);border:1.5px solid #cfc1ad;border-radius:5px 8px 6px 9px;box-shadow:3px 4px 0 #eadfce,7px 9px 0 #e8ddca;transform:rotate(-.18deg)}
+.diary-card:before{content:'';position:absolute;inset:7px;border:1px dashed #eee5d7;border-radius:3px;pointer-events:none}
+.calendar-column{border-color:#eadfce}
+.month-label{font-size:25px;color:#454139}
+.calendar-hint{font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:14px;color:#a2937d}
+.icon-button{border-color:#d9cbb8;background:var(--paper);font-family:'Gaegu',sans-serif;font-size:20px}
+.icon-button:hover,.day-cell:hover{background:#f6efdf}
+.weekday-row{color:#a39684;border-color:#eee4d5}
+.day-cell{font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:16px;color:#5a5146;border-radius:47% 53% 50% 45%}
+.day-cell.today .day-number{border:1.5px solid #d98270;border-radius:43% 57% 47% 53%;transform:rotate(-8deg)}
+.day-cell.selected-day{background:#f4ead8;outline:1px dashed #d5bfa0}
+.day-dot{width:7px;height:7px;box-shadow:0 0 0 1px var(--paper)}
+.legend,.field-label,.note-meta,.save-hint,.delete-button{font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:13px}
+.legend{color:#8e806d}.legend-dot{width:8px;height:8px;border:1px solid #c66e5e}
+.entry-heading .eyebrow{color:#b09d81}.entry-heading h2{font-size:23px;color:#4e493f}
+.field-label{color:#716452;font-size:15px}
+.entry-panel textarea{background:#fffdf8;border:1px solid #e1d4c1;border-radius:3px 7px 4px 6px;font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:16px;line-height:1.55;padding:12px 13px}
+.entry-panel textarea:focus{border-color:#c99c7e;box-shadow:0 0 0 2px #e7d6c1}
+.entry-panel textarea::placeholder{color:#b9ad9b}
+.note-meta{color:#aa9d8b;font-size:12px}
+.color-option{border:1px solid #fffdf6;box-shadow:0 0 0 1px #d9cbb8;width:19px;height:19px}
+.color-option.selected:after{border-style:dashed}
+.delete-button{color:#a28f78}
+.save-button{position:relative;border:1px solid #39372f;border-radius:3px 7px 4px 6px;background:#454137;font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:15px;padding:8px 15px;box-shadow:2px 2px 0 #d7c6ad}
+.save-button:hover{transform:translateY(-1px)}
+.save-hint{text-align:right;color:#a2937d}
+footer{font-family:'Gaegu','Noto Sans KR',sans-serif;font-size:14px;color:#a3947e}
+@media(max-width:720px){.intro{padding-top:47px}.intro h1{font-size:36px}.intro-doodle{width:70px;left:auto;right:6px;top:55px}.diary-card{transform:none;margin:0 2px;box-shadow:2px 3px 0 #eadfce,4px 6px 0 #e8ddca}.calendar-column{border-bottom-color:#eadfce}}
