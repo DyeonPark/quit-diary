@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <title>퇴사 다이어리</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="wordmark" href="#" aria-label="퇴사 다이어리 홈"><span class="brand-mark">●</span> 퇴사 다이어리</a>
+        <span class="private-note">나만 보는 기록</span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">A LITTLE SPACE FOR YOURSELF</p>
+        <h1 id="page-title">오늘도 마음속에<br />점을 찍었나요?</h1>
+        <p class="intro-copy">퇴사하고 싶은 날을 표시하고, 그날의 마음을 가볍게 남겨보세요.</p>
+      </section>
+
+      <section class="diary-card" aria-label="퇴사 다이어리 달력">
+        <div class="calendar-column">
+          <div class="calendar-header">
+            <div>
+              <p class="month-label" id="month-label"></p>
+              <p class="calendar-hint">마음이 복잡했던 날에 점을 찍어보세요</p>
+            </div>
+            <div class="month-controls">
+              <button class="icon-button" id="prev-month" aria-label="이전 달">‹</button>
+              <button class="icon-button" id="next-month" aria-label="다음 달">›</button>
+            </div>
+          </div>
+          <div class="weekday-row" aria-hidden="true">
+            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          </div>
+          <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="날짜 선택"></div>
+          <div class="legend"><span class="legend-dot"></span><span>퇴사하고 싶은 날</span><span class="legend-count" id="month-count"></span></div>
+        </div>
+
+        <aside class="entry-panel" aria-label="날짜 기록">
+          <div class="entry-heading">
+            <p class="eyebrow">YOUR NOTE</p>
+            <h2 id="selected-date">날짜를 골라주세요</h2>
+          </div>
+          <label class="field-label" for="note-input">그날의 마음</label>
+          <textarea id="note-input" maxlength="240" placeholder="오늘 어떤 일이 있었나요?\n짧은 메모도 좋아요." disabled></textarea>
+          <div class="note-meta"><span>생각나는 만큼만 적어도 괜찮아요</span><span id="char-count">0 / 240</span></div>
+          <div class="color-section">
+            <span class="field-label">오늘의 점 색</span>
+            <div class="color-options" role="radiogroup" aria-label="점 색깔 선택">
+              <button class="color-option selected" data-color="#d98270" aria-label="코랄" aria-checked="true" role="radio" style="--swatch:#d98270"></button>
+              <button class="color-option" data-color="#d2a64f" aria-label="머스터드" aria-checked="false" role="radio" style="--swatch:#d2a64f"></button>
+              <button class="color-option" data-color="#7e9c87" aria-label="세이지" aria-checked="false" role="radio" style="--swatch:#7e9c87"></button>
+              <button class="color-option" data-color="#7895b2" aria-label="블루" aria-checked="false" role="radio" style="--swatch:#7895b2"></button>
+              <button class="color-option" data-color="#a28caf" aria-label="라일락" aria-checked="false" role="radio" style="--swatch:#a28caf"></button>
+            </div>
+          </div>
+          <div class="entry-actions">
+            <button class="delete-button" id="delete-entry" disabled>기록 지우기</button>
+            <button class="save-button" id="save-entry" disabled>기록하기 <span>↗</span></button>
+          </div>
+          <p class="save-hint" id="save-hint">날짜를 선택하면 기록을 시작할 수 있어요.</p>
+        </aside>
+      </section>
+      <footer>괜찮아요. 오늘의 마음은 오늘의 마음일 뿐이니까요.</footer>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
