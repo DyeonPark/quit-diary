@@ -1,17 +1,37 @@
 const grid = document.querySelector('#calendar-grid');
-const monthLabel = document.querySelector('#month-label');
+const heroMonth = document.querySelector('#hero-month');
+const monthLockup = document.querySelector('.month-lockup');
+const yearStack = document.querySelector('.year-stack');
+const heroYearTop = document.querySelector('#hero-year-top');
+const heroYearBottom = document.querySelector('#hero-year-bottom');
 const selectedDateLabel = document.querySelector('#selected-date');
+const entryDialog = document.querySelector('#entry-dialog');
+const deleteConfirm = document.querySelector('#delete-confirm');
 const noteInput = document.querySelector('#note-input');
 const saveButton = document.querySelector('#save-entry');
 const deleteButton = document.querySelector('#delete-entry');
 const countLabel = document.querySelector('#month-count');
 const charCount = document.querySelector('#char-count');
-const saveHint = document.querySelector('#save-hint');
 const storageKey = 'exit-diary.entries.v1';
+const monthNames = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+const monthThemes = [
+  {ink:'#235b43',line:'#37634e',accent:'#235b43'},
+  {ink:'#526986',line:'#657b9a',accent:'#526986'},
+  {ink:'#9c82b1',line:'#ad97be',accent:'#9c82b1'},
+  {ink:'#4d986e',line:'#5aa67a',accent:'#4d986e'},
+  {ink:'#c95f83',line:'#d77996',accent:'#c95f83'},
+  {ink:'#bb8b16',line:'#c99a26',accent:'#c28f0e'},
+  {ink:'#e87532',line:'#e98b51',accent:'#e87532'},
+  {ink:'#8f315f',line:'#a54873',accent:'#8f315f'},
+  {ink:'#9d8b6e',line:'#b1a086',accent:'#9d8b6e'},
+  {ink:'#a96e35',line:'#bd8248',accent:'#a96e35'},
+  {ink:'#394442',line:'#4d5a57',accent:'#394442'},
+  {ink:'#287aa6',line:'#428fb8',accent:'#287aa6'}
+];
 let entries = readEntries();
 const now = new Date();
 let shownMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-let selectedKey = dateKey(now);
+let selectedKey = null;
 let selectedColor = '#d98270';
 
 function readEntries() {
@@ -21,21 +41,49 @@ function readEntries() {
 function dateKey(date) {
   return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
 }
+function fitMonthTitle() {
+  const canvas = fitMonthTitle.canvas || (fitMonthTitle.canvas = document.createElement('canvas'));
+  const context = canvas.getContext('2d');
+  const style = getComputedStyle(heroMonth);
+  const probeSize = 100;
+  context.font = `${style.fontStyle} ${style.fontWeight} ${probeSize}px ${style.fontFamily}`;
+  const textWidth = context.measureText(heroMonth.textContent).width;
+  const gap = parseFloat(getComputedStyle(monthLockup).gap) || 0;
+  const width = monthLockup.clientWidth - yearStack.getBoundingClientRect().width - gap;
+  const maxSize = matchMedia('(max-width: 680px)').matches ? 122 : 260;
+  heroMonth.style.fontSize = `${Math.max(36, Math.min(maxSize, width / textWidth * probeSize))}px`;
+}
 function renderCalendar() {
   const year = shownMonth.getFullYear();
   const month = shownMonth.getMonth();
-  monthLabel.textContent = `${year}년 ${month+1}월`;
+  const theme = monthThemes[month];
+  document.documentElement.dataset.monthTheme = month;
+  document.documentElement.style.setProperty('--navy', theme.ink);
+  document.documentElement.style.setProperty('--rule', theme.line);
+  document.documentElement.style.setProperty('--orange', theme.accent);
+  document.documentElement.style.backgroundColor = theme.ink;
+  document.body.style.backgroundColor = theme.ink;
+  document.querySelector('meta[name="theme-color"]').content = theme.ink;
+  heroMonth.textContent = monthNames[month];
+  heroYearTop.textContent = String(year).slice(0, 2);
+  heroYearBottom.textContent = String(year).slice(2);
+  requestAnimationFrame(fitMonthTitle);
   grid.replaceChildren();
-  const firstWeekday = new Date(year, month, 1).getDay();
+  const firstWeekday = (new Date(year, month, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(year, month+1, 0).getDate();
   const totalCells = Math.ceil((firstWeekday + daysInMonth) / 7) * 7;
   for (let i=0;i<totalCells;i++) {
     const day = i-firstWeekday+1;
     const cell = document.createElement('button');
     cell.type='button'; cell.className='day-cell'; cell.setAttribute('role','gridcell');
-    if (day < 1 || day > daysInMonth) { cell.classList.add('outside'); cell.disabled=true; cell.setAttribute('aria-hidden','true'); }
+    if (day < 1 || day > daysInMonth) {
+      cell.classList.add('outside'); cell.disabled=true; cell.setAttribute('aria-hidden','true');
+      const outsideDay = day < 1 ? new Date(year, month, day).getDate() : day - daysInMonth;
+      const number=document.createElement('span');number.className='day-number';number.textContent=outsideDay;cell.append(number);
+    }
     else {
       const date = new Date(year, month, day); const key = dateKey(date); const entry = entries[key];
+      if (entry) cell.classList.add('has-entry');
       cell.dataset.date=key; cell.setAttribute('aria-label', `${month+1}월 ${day}일${entry ? ', 기록 있음' : ''}`);
       if (dateKey(date)===dateKey(now)) cell.classList.add('today');
       if (key===selectedKey) cell.classList.add('selected-day');
@@ -53,14 +101,15 @@ function selectDate(key) {
   const [year,month,day]=key.split('-').map(Number);
   selectedDateLabel.textContent=`${year}년 ${month}월 ${day}일`;
   const entry=entries[key];
-  noteInput.disabled=false; noteInput.value=entry?.note || ''; selectedColor=entry?.color || '#d98270';
+  noteInput.disabled=false; noteInput.value=entry?.note || ''; selectedColor=entry?.color || monthThemes[shownMonth.getMonth()].accent;
   charCount.textContent=`${noteInput.value.length} / 240`;
-  saveButton.disabled=false; deleteButton.disabled=!entry;
-  saveHint.textContent=entry ? '기록을 수정할 수 있어요.' : '점과 메모를 남겨보세요.';
+  saveButton.disabled=false; deleteButton.hidden=!entry;
   document.querySelectorAll('.color-option').forEach(button=>{
     const active=button.dataset.color===selectedColor;button.classList.toggle('selected',active);button.setAttribute('aria-checked',String(active));
   });
-  renderCalendar();
+  grid.querySelectorAll('.day-cell').forEach(cell=>cell.classList.toggle('selected-day',cell.dataset.date===key));
+  entryDialog.showModal();
+  noteInput.focus();
 }
 document.querySelector('#prev-month').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()-1,1);renderCalendar();});
 document.querySelector('#next-month').addEventListener('click',()=>{shownMonth=new Date(shownMonth.getFullYear(),shownMonth.getMonth()+1,1);renderCalendar();});
@@ -69,15 +118,24 @@ document.querySelectorAll('.color-option').forEach(button=>button.addEventListen
   document.querySelectorAll('.color-option').forEach(item=>{const active=item===button;item.classList.toggle('selected',active);item.setAttribute('aria-checked',String(active));});
 }));
 noteInput.addEventListener('input',()=>{charCount.textContent=`${noteInput.value.length} / 240`;});
+document.querySelector('#close-dialog').addEventListener('click',()=>entryDialog.close());
+entryDialog.addEventListener('click',(event)=>{if(event.target===entryDialog)entryDialog.close();});
+document.querySelector('#cancel-delete').addEventListener('click',()=>deleteConfirm.close());
+deleteConfirm.addEventListener('click',(event)=>{if(event.target===deleteConfirm)deleteConfirm.close();});
 saveButton.addEventListener('click',()=>{
   const note=noteInput.value.trim();
   entries[selectedKey]={note,color:selectedColor};
   localStorage.setItem(storageKey,JSON.stringify(entries));
-  deleteButton.disabled=false;saveHint.textContent=note?'오늘의 마음을 기록했어요.':'오늘의 점을 남겼어요.';
   renderCalendar();
+  entryDialog.close();
 });
-deleteButton.addEventListener('click',()=>{
+deleteButton.addEventListener('click',()=>deleteConfirm.showModal());
+document.querySelector('#confirm-delete').addEventListener('click',()=>{
   delete entries[selectedKey];localStorage.setItem(storageKey,JSON.stringify(entries));
-  noteInput.value='';charCount.textContent='0 / 240';deleteButton.disabled=true;saveHint.textContent='기록을 지웠어요.';renderCalendar();
+  noteInput.value='';charCount.textContent='0 / 240';deleteButton.hidden=true;renderCalendar();
+  deleteConfirm.close();
+  entryDialog.close();
 });
-renderCalendar();selectDate(selectedKey);
+renderCalendar();
+window.addEventListener('resize',fitMonthTitle);
+if (document.fonts?.ready) document.fonts.ready.then(fitMonthTitle);
