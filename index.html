@@ -21,6 +21,7 @@
 
         <section class="calendar-column" aria-label="날짜 선택">
           <div class="calendar-header">
+            <button class="account-button" id="account-button" type="button">로그인</button>
             <div class="month-controls">
               <button class="icon-button" id="prev-month" aria-label="이전 달">‹</button>
               <button class="icon-button" id="next-month" aria-label="다음 달">›</button>
@@ -58,6 +59,18 @@
           </div>
         </section>
       </dialog>
+      <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-title">
+        <div class="account-dialog-heading">
+          <h2 id="account-title">계정</h2>
+          <button class="dialog-close" id="close-account" type="button" aria-label="계정 창 닫기">×</button>
+        </div>
+        <p id="account-status">로그인하면 기록을 여러 기기에서 동기화할 수 있어요.</p>
+        <button class="provider-button" id="google-login" type="button">Google로 계속</button>
+        <button class="provider-button" id="apple-login" type="button">Apple로 계속</button>
+        <button class="text-button" id="sign-out" type="button" hidden>로그아웃</button>
+        <button class="text-button danger-button" id="delete-account" type="button" hidden>계정 및 기록 삭제</button>
+        <p class="auth-error" id="auth-error" role="status" hidden></p>
+      </dialog>
       <dialog class="confirm-dialog" id="delete-confirm" aria-labelledby="delete-title">
         <h2 id="delete-title">이 기록을 삭제할까요?</h2>
         <div class="confirm-actions">
@@ -65,7 +78,8 @@
           <button type="button" id="confirm-delete">삭제</button>
         </div>
       </dialog>
+      <div class="app-toast" id="app-toast" role="status" aria-live="polite" hidden></div>
     </main>
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
