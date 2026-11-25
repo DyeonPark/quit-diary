@@ -1,0 +1,8 @@
+{
+  "appId": "com.dyeonpark.exitdiary",
+  "appName": "퇴사 다이어리",
+  "webDir": "dist",
+  "ios": {
+    "contentInset": "automatic"
+  }
+}
